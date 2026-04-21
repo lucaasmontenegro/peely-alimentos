@@ -36,14 +36,17 @@
 
   <!-- ==================== HERO ==================== -->
   <section id="inicio" class="hero">
+    <img src="assets/images/hero.png" class="hero-img" alt="Peely Alimentos - Vegetales Congelados">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <span class="hero-tag">🌿 Frescos. Naturales. Listos.</span>
-      <h1 class="hero-title">Vegetales congelados<br>de calidad <em>premium</em></h1>
-      <p class="hero-subtitle">Proveemos ingredientes procesados y congelados para restaurantes, caterings y negocios gastronómicos de todo el país.</p>
-      <div class="hero-actions">
-        <a href="#productos" class="btn btn-primary">Ver Productos</a>
-        <a href="#contacto" class="btn btn-outline-white">Hacer un Pedido</a>
+      <div class="hero-inner">
+        <span class="hero-tag">🌿 Frescos. Naturales. Listos.</span>
+        <h1 class="hero-title">Vegetales congelados<br>de calidad <em>premium</em></h1>
+        <p class="hero-subtitle">Proveemos ingredientes procesados y congelados para restaurantes, caterings y negocios gastronómicos de todo el país.</p>
+        <div class="hero-actions">
+          <a href="#productos" class="btn btn-primary">Ver Productos</a>
+          <a href="#contacto" class="btn btn-outline-white">Hacer un Pedido</a>
+        </div>
       </div>
     </div>
     <a href="#productos" class="hero-scroll" aria-label="Ir a productos">
@@ -99,20 +102,19 @@
         <h2 class="section-title">Recetas con Peely</h2>
         <p class="section-subtitle">Descubrí lo que podés hacer con nuestros productos en minutos.</p>
       </div>
-      <div class="recipes-grid">
-
-        <div class="recipe-card reveal">
-          <div class="recipe-icon">🥢</div>
-          <div class="recipe-meta">
-            <span>⏱ 15 min</span>
-            <span class="recipe-diff easy">Fácil</span>
-          </div>
-          <h3>Salteado de Vegetales al Wok</h3>
-          <p>Un salteado rápido y nutritivo con el sabor del Asia en tu cocina. Sin precocción, listo al fuego.</p>
-          <div class="recipe-product">Producto: <strong>Mix Wok Peely</strong></div>
-          <button class="btn btn-ghost recipe-toggle" data-target="recipe-wok">Ver receta ↓</button>
-          <div class="recipe-steps" id="recipe-wok">
-            <ol>
+      <!-- Receta destacada: imagen + video -->
+      <div class="recipe-featured reveal">
+        <div class="recipe-featured-left">
+          <div class="recipe-video-header">Salteado de Vegetales al Wok</div>
+          <img src="assets/images/recetas/receta-wok.png" alt="Salteado de Vegetales al Wok" class="recipe-featured-img">
+          <div class="recipe-featured-info">
+            <div class="recipe-meta">
+              <span>⏱ 15 min</span>
+              <span class="recipe-diff easy">Fácil</span>
+            </div>
+            <p>Un salteado rápido y nutritivo con el sabor del Asia en tu cocina. Sin precocción, listo al fuego.</p>
+            <div class="recipe-product">Producto: <strong>Mix Wok Peely</strong></div>
+            <ol class="recipe-steps-list">
               <li>Calentar un wok o sartén grande a fuego alto con un chorro de aceite.</li>
               <li>Agregar el Mix Wok Peely directamente congelado.</li>
               <li>Saltear 5–7 minutos revolviendo constantemente.</li>
@@ -121,8 +123,20 @@
             </ol>
           </div>
         </div>
+        <div class="recipe-featured-right">
+          <div class="recipe-video-header">Video de la Receta</div>
+          <blockquote class="tiktok-embed"
+            cite="https://www.tiktok.com/@lucaasmontenegro/video/7630175689978776850"
+            data-video-id="7630175689978776850">
+            <section></section>
+          </blockquote>
+        </div>
+      </div>
 
-        <div class="recipe-card reveal" style="transition-delay: 0.1s">
+      <!-- Otras recetas -->
+      <div class="recipes-grid">
+
+        <div class="recipe-card reveal">
           <div class="recipe-icon">🍲</div>
           <div class="recipe-meta">
             <span>⏱ 25 min</span>
@@ -143,7 +157,7 @@
           </div>
         </div>
 
-        <div class="recipe-card reveal" style="transition-delay: 0.2s">
+        <div class="recipe-card reveal" style="transition-delay: 0.1s">
           <div class="recipe-icon">🥦</div>
           <div class="recipe-meta">
             <span>⏱ 30 min</span>
@@ -164,7 +178,7 @@
           </div>
         </div>
 
-        <div class="recipe-card reveal" style="transition-delay: 0.3s">
+        <div class="recipe-card reveal" style="transition-delay: 0.2s">
           <div class="recipe-icon">🫑</div>
           <div class="recipe-meta">
             <span>⏱ 20 min</span>
@@ -422,5 +436,6 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script async src="https://www.tiktok.com/embed.js"></script>
 </body>
 </html>

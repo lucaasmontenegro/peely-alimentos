@@ -65,6 +65,8 @@ const PRODUCTS = [
     category: 'vegetales',
     emoji: '🍟',
     desc: 'Papas cortadas en bastones. Listas para freír o al horno, crujientes y doradas.',
+    img: 'assets/images/productos/papas-francesas.jpg',
+    imgHover: 'assets/images/productos/papas-francesas-hover.png',
   },
 ];
 
@@ -86,15 +88,24 @@ function renderProducts(filter) {
     const card = document.createElement('div');
     card.className = 'product-card';
     card.style.animationDelay = `${i * 0.055}s`;
-    card.innerHTML = `
-      <span class="product-emoji">${p.emoji}</span>
-      <span class="product-category-badge ${cls}">${label}</span>
-      <h3>${p.name}</h3>
-      <p>${p.desc}</p>
-      <button class="product-order-btn" data-id="${p.id}" data-name="${p.name}">
-        + Agregar al pedido
-      </button>
-    `;
+    card.innerHTML = p.img
+      ? `<div class="product-img-wrap">
+           <img src="${p.img}" alt="${p.name}" class="product-img product-img-base">
+           ${p.imgHover ? `<img src="${p.imgHover}" alt="${p.name} cocinado" class="product-img product-img-hover">` : ''}
+         </div>
+         <div class="product-body">
+           <span class="product-category-badge ${cls}">${label}</span>
+           <h3>${p.name}</h3>
+           <p>${p.desc}</p>
+           <button class="product-order-btn" data-id="${p.id}" data-name="${p.name}">+ Agregar al pedido</button>
+         </div>`
+      : `<div class="product-body">
+           <span class="product-emoji">${p.emoji}</span>
+           <span class="product-category-badge ${cls}">${label}</span>
+           <h3>${p.name}</h3>
+           <p>${p.desc}</p>
+           <button class="product-order-btn" data-id="${p.id}" data-name="${p.name}">+ Agregar al pedido</button>
+         </div>`;
     grid.appendChild(card);
   });
 
