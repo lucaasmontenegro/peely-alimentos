@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Peely Alimentos – Vegetales congelados de calidad premium para restaurantes, caterings y negocios gastronómicos.">
+  <title>Peely Alimentos | Vegetales Congelados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#inicio" class="nav-logo">
+        <img src="assets/images/logo.jpeg" alt="Peely Alimentos">
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#inicio" class="nav-link">Inicio</a></li>
+        <li><a href="#productos" class="nav-link">Productos</a></li>
+        <li><a href="#recetas" class="nav-link">Recetas</a></li>
+        <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="#contacto" class="nav-link">Contacto</a></li>
+      </ul>
+      <a href="#contacto" class="btn btn-primary nav-cta">Hacer Pedido</a>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="inicio" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <span class="hero-tag">🌿 Frescos. Naturales. Listos.</span>
+      <h1 class="hero-title">Vegetales congelados<br>de calidad <em>premium</em></h1>
+      <p class="hero-subtitle">Proveemos ingredientes procesados y congelados para restaurantes, caterings y negocios gastronómicos de todo el país.</p>
+      <div class="hero-actions">
+        <a href="#productos" class="btn btn-primary">Ver Productos</a>
+        <a href="#contacto" class="btn btn-outline-white">Hacer un Pedido</a>
+      </div>
+    </div>
+    <a href="#productos" class="hero-scroll" aria-label="Ir a productos">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </a>
+  </section>
+
+  <!-- ==================== FEATURES BAR ==================== -->
+  <div class="features-bar">
+    <div class="container features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">❄️</span>
+        <span>Congelado IQF</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🌿</span>
+        <span>100% Natural</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">📦</span>
+        <span>Distribución a Todo el País</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✅</span>
+        <span>Calidad Garantizada</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PRODUCTOS ==================== -->
+  <section id="productos" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Catálogo</span>
+        <h2 class="section-title">Nuestros Productos</h2>
+        <p class="section-subtitle">Seleccionamos y procesamos los mejores vegetales para brindarte siempre la máxima calidad.</p>
+      </div>
+      <div class="filter-tabs reveal">
+        <button class="tab active" data-filter="all">Todos</button>
+        <button class="tab" data-filter="cebollas">Cebollas</button>
+        <button class="tab" data-filter="mix">Mix</button>
+        <button class="tab" data-filter="vegetales">Vegetales</button>
+      </div>
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==================== RECETAS ==================== -->
+  <section id="recetas" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Inspiración</span>
+        <h2 class="section-title">Recetas con Peely</h2>
+        <p class="section-subtitle">Descubrí lo que podés hacer con nuestros productos en minutos.</p>
+      </div>
+      <div class="recipes-grid">
+
+        <div class="recipe-card reveal">
+          <div class="recipe-icon">🥢</div>
+          <div class="recipe-meta">
+            <span>⏱ 15 min</span>
+            <span class="recipe-diff easy">Fácil</span>
+          </div>
+          <h3>Salteado de Vegetales al Wok</h3>
+          <p>Un salteado rápido y nutritivo con el sabor del Asia en tu cocina. Sin precocción, listo al fuego.</p>
+          <div class="recipe-product">Producto: <strong>Mix Wok Peely</strong></div>
+          <button class="btn btn-ghost recipe-toggle" data-target="recipe-wok">Ver receta ↓</button>
+          <div class="recipe-steps" id="recipe-wok">
+            <ol>
+              <li>Calentar un wok o sartén grande a fuego alto con un chorro de aceite.</li>
+              <li>Agregar el Mix Wok Peely directamente congelado.</li>
+              <li>Saltear 5–7 minutos revolviendo constantemente.</li>
+              <li>Condimentar con salsa de soja, ajo y jengibre al gusto.</li>
+              <li>Servir inmediatamente.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="recipe-card reveal" style="transition-delay: 0.1s">
+          <div class="recipe-icon">🍲</div>
+          <div class="recipe-meta">
+            <span>⏱ 25 min</span>
+            <span class="recipe-diff easy">Fácil</span>
+          </div>
+          <h3>Sopa Casera de Vegetales</h3>
+          <p>Una sopa reconfortante lista en minutos, ideal para el invierno o como entrada de un menú.</p>
+          <div class="recipe-product">Producto: <strong>Mix para Sopa Peely</strong></div>
+          <button class="btn btn-ghost recipe-toggle" data-target="recipe-sopa">Ver receta ↓</button>
+          <div class="recipe-steps" id="recipe-sopa">
+            <ol>
+              <li>Llevar 1 litro de caldo de verduras a hervor.</li>
+              <li>Agregar el Mix para Sopa Peely.</li>
+              <li>Cocinar 15–20 minutos a fuego medio.</li>
+              <li>Condimentar con sal, pimienta y perejil fresco.</li>
+              <li>Servir caliente.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="recipe-card reveal" style="transition-delay: 0.2s">
+          <div class="recipe-icon">🥦</div>
+          <div class="recipe-meta">
+            <span>⏱ 30 min</span>
+            <span class="recipe-diff easy">Fácil</span>
+          </div>
+          <h3>Brócoli Gratinado</h3>
+          <p>Un clásico irresistible: brócoli tierno cubierto de queso derretido y gratinado al horno.</p>
+          <div class="recipe-product">Producto: <strong>Brócoli Peely</strong></div>
+          <button class="btn btn-ghost recipe-toggle" data-target="recipe-brocoli">Ver receta ↓</button>
+          <div class="recipe-steps" id="recipe-brocoli">
+            <ol>
+              <li>Precalentar el horno a 200 °C.</li>
+              <li>Descongelar levemente el Brócoli Peely.</li>
+              <li>Disponer en fuente para horno, cubrir con crema y queso rallado.</li>
+              <li>Salpimentar y agregar nuez moscada al gusto.</li>
+              <li>Hornear 20 minutos hasta gratinar.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="recipe-card reveal" style="transition-delay: 0.3s">
+          <div class="recipe-icon">🫑</div>
+          <div class="recipe-meta">
+            <span>⏱ 20 min</span>
+            <span class="recipe-diff easy">Fácil</span>
+          </div>
+          <h3>Tortilla de Espinaca y Pimientos</h3>
+          <p>Una tortilla colorida y nutritiva. Perfecta para cualquier comida del día, con muy poco esfuerzo.</p>
+          <div class="recipe-product">Producto: <strong>Espinaca + Mix Pimientos Peely</strong></div>
+          <button class="btn btn-ghost recipe-toggle" data-target="recipe-tortilla">Ver receta ↓</button>
+          <div class="recipe-steps" id="recipe-tortilla">
+            <ol>
+              <li>Saltear Espinaca y Mix Pimientos Peely en sartén con aceite, 5 min.</li>
+              <li>Batir 4 huevos con sal y pimienta.</li>
+              <li>Verter los huevos sobre los vegetales salteados.</li>
+              <li>Cocinar a fuego medio-bajo, 4–5 min por cada lado.</li>
+              <li>Servir caliente o a temperatura ambiente.</li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== NOSOTROS ==================== -->
+  <section id="nosotros" class="section">
+    <div class="container">
+      <div class="nosotros-grid">
+        <div class="nosotros-text reveal">
+          <span class="section-tag">Nuestra historia</span>
+          <h2 class="section-title">¿Quiénes somos?</h2>
+          <p>En <strong>Peely Alimentos</strong> creemos que comer bien no tiene que ser complicado. Nacimos con la misión de proveer a restaurantes, caterings y negocios gastronómicos con ingredientes procesados y congelados de la más alta calidad.</p>
+          <p>Trabajamos con productores seleccionados para garantizar que cada vegetal que procesamos llegue a tu cocina en su punto óptimo de frescura y sabor.</p>
+          <p>Nuestra tecnología de congelado <strong>IQF</strong> (Individually Quick Frozen) preserva el color, la textura y los nutrientes originales de cada producto, asegurando resultados consistentes en cada preparación.</p>
+          <a href="#contacto" class="btn btn-primary" style="margin-top: 8px;">Contactarnos</a>
+        </div>
+        <div class="nosotros-values reveal">
+          <div class="value-card">
+            <div class="value-icon">🌱</div>
+            <h4>Origen Natural</h4>
+            <p>Trabajamos con productores seleccionados para garantizar vegetales de primera calidad desde el campo.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">❄️</div>
+            <h4>Tecnología IQF</h4>
+            <p>El congelado individual preserva nutrientes, textura y sabor al máximo, sin aditivos ni conservantes.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">⏱️</div>
+            <h4>Ahorro de Tiempo</h4>
+            <p>Vegetales listos para usar. Sin pelado, sin corte, sin desperdicio. Más eficiencia en tu cocina.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🚚</div>
+            <h4>Distribución</h4>
+            <p>Llegamos a todo el país con cadena de frío garantizada y tiempos de entrega confiables.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACTO / PEDIDO ==================== -->
+  <section id="contacto" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Pedidos</span>
+        <h2 class="section-title">Hacer un Pedido</h2>
+        <p class="section-subtitle">Completá el formulario y nos ponemos en contacto con vos a la brevedad.</p>
+      </div>
+      <div class="contacto-grid">
+
+        <div class="contact-info reveal">
+          <h3>Contacto directo</h3>
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <div>
+              <strong>Email</strong>
+              <p>info@peelyalimentos.com.ar</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📱</span>
+            <div>
+              <strong>WhatsApp</strong>
+              <p>+54 9 11 XXXX-XXXX</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <strong>Zona de distribución</strong>
+              <p>Todo el país</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">⏰</span>
+            <div>
+              <strong>Horario de atención</strong>
+              <p>Lunes a Viernes, 9 a 18 hs</p>
+            </div>
+          </div>
+        </div>
+
+        <form class="order-form reveal" id="order-form" novalidate>
+
+          <div class="form-section">
+            <h4>Tus datos</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Juan Pérez">
+              </div>
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required placeholder="juan@empresa.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="telefono">Teléfono *</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder="+54 9 11 XXXX-XXXX">
+              </div>
+              <div class="form-group">
+                <label for="empresa">Empresa / Negocio</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Mi Restaurante">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h4>Productos del pedido</h4>
+            <p class="form-hint">Seleccioná los productos y especificá la cantidad aproximada en kg.</p>
+            <div class="products-order-grid">
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_cebolla_cubitos">
+                  <span>🧅 Cebolla Picada cubitos</span>
+                </label>
+                <input type="number" name="qty_cebolla_cubitos" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_cebolla_juliana">
+                  <span>🧅 Cebolla Cortada juliana</span>
+                </label>
+                <input type="number" name="qty_cebolla_juliana" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_mix_wok">
+                  <span>🥢 Mix Wok</span>
+                </label>
+                <input type="number" name="qty_mix_wok" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_mix_sopa">
+                  <span>🍲 Mix para Sopa</span>
+                </label>
+                <input type="number" name="qty_mix_sopa" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_mix_horno">
+                  <span>🥘 Mix para Horno</span>
+                </label>
+                <input type="number" name="qty_mix_horno" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_mix_pimientos">
+                  <span>🫑 Mix Pimientos</span>
+                </label>
+                <input type="number" name="qty_mix_pimientos" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_brocoli">
+                  <span>🥦 Brócoli</span>
+                </label>
+                <input type="number" name="qty_brocoli" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_espinaca">
+                  <span>🥬 Espinaca cruda</span>
+                </label>
+                <input type="number" name="qty_espinaca" min="1" placeholder="kg" class="qty-input">
+              </div>
+              <div class="product-order-item">
+                <label class="product-checkbox">
+                  <input type="checkbox" name="producto_papa">
+                  <span>🍟 Papa francesa</span>
+                </label>
+                <input type="number" name="qty_papa" min="1" placeholder="kg" class="qty-input">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-group">
+              <label for="notas">Notas adicionales</label>
+              <textarea id="notas" name="notas" rows="3" placeholder="Dirección de entrega, frecuencia del pedido, consultas..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary btn-large" id="submit-btn">
+              Enviar Pedido →
+            </button>
+            <p class="form-note">* Campos obligatorios. Te contactaremos a la brevedad.</p>
+          </div>
+
+          <div class="form-success" id="form-success">
+            <div class="success-icon">✅</div>
+            <h4>¡Pedido enviado!</h4>
+            <p>Recibimos tu solicitud. Nos pondremos en contacto pronto.</p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <img src="assets/images/logo.jpeg" alt="Peely Alimentos" class="footer-logo">
+        <p>Vegetales congelados de calidad premium para tu negocio gastronómico.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#recetas">Recetas</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contacto</h4>
+        <p>📧 info@peelyalimentos.com.ar</p>
+        <p>📱 +54 9 11 XXXX-XXXX</p>
+        <p>⏰ Lun–Vie, 9–18 hs</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2025 Peely Alimentos. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
