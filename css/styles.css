@@ -131,7 +131,7 @@ section[id] { scroll-margin-top: 80px; }
 }
 
 .nav-logo img {
-  height: 44px;
+  height: 48px;
   width: auto;
   object-fit: contain;
 }
@@ -626,7 +626,14 @@ section[id] { scroll-margin-top: 80px; }
   padding: 56px 24px;
 }
 
-.footer-logo { height: 44px; width: auto; margin-bottom: 14px; filter: brightness(0) invert(1); }
+.footer-logo-wrap {
+  display: inline-block;
+  background: var(--white);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+}
+.footer-logo { height: 36px; width: auto; display: block; }
 .footer-brand p { font-size: 0.88rem; line-height: 1.65; max-width: 280px; }
 
 .footer-links h4,
