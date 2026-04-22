@@ -370,6 +370,8 @@ section[id] { scroll-margin-top: 80px; }
   padding: 28px 24px;
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   animation: fadeUp 0.4s ease both;
+  display: flex;
+  flex-direction: column;
 }
 .product-card:hover {
   transform: translateY(-4px);
@@ -424,7 +426,10 @@ section[id] { scroll-margin-top: 80px; }
 .product-card h3 { font-size: 1rem; margin-bottom: 8px; }
 .product-card p { font-size: 0.88rem; color: var(--gray); line-height: 1.55; margin-bottom: 22px; }
 
+.product-body { flex: 1; }
+
 .product-order-btn {
+  margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -610,6 +615,7 @@ section[id] { scroll-margin-top: 80px; }
 
 .contact-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
 .contact-icon { font-size: 1.25rem; min-width: 32px; text-align: center; padding-top: 2px; }
+.contact-icon-wa { display: flex; align-items: center; justify-content: center; }
 .contact-item strong { display: block; font-size: 0.83rem; font-weight: 700; margin-bottom: 2px; }
 .contact-item p { font-size: 0.9rem; color: var(--gray); }
 
@@ -769,6 +775,30 @@ section[id] { scroll-margin-top: 80px; }
 .success-icon { font-size: 3rem; margin-bottom: 16px; }
 .form-success h4 { font-size: 1.3rem; color: var(--primary); margin-bottom: 8px; }
 .form-success p { color: var(--gray); }
+
+/* ============================================
+   WHATSAPP FLOTANTE
+   ============================================ */
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
 
 /* ============================================
    FOOTER
