@@ -25,6 +25,7 @@
         <li><a href="#productos" class="nav-link">Productos</a></li>
         <li><a href="#recetas" class="nav-link">Recetas</a></li>
         <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="#suscripcion" class="nav-link">Suscripción</a></li>
         <li><a href="#contacto" class="nav-link">Contacto</a></li>
       </ul>
       <a href="#contacto" class="btn btn-primary nav-cta">Hacer Pedido</a>
@@ -241,6 +242,78 @@
     </div>
   </section>
 
+  <!-- ==================== SUSCRIPCIÓN MENSUAL ==================== -->
+  <section id="suscripcion" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">📦 Entrega mensual</span>
+        <h2 class="section-title">Suscripción Mensual</h2>
+        <p class="section-subtitle">Elegí tus productos, fijamos las cantidades y los recibís todos los meses sin preocuparte.</p>
+      </div>
+
+      <div class="subs-layout">
+
+        <div class="subs-products reveal">
+          <p class="subs-hint">Cada unidad es un pack de <strong>500g</strong>. Usá los botones <strong>+</strong> y <strong>−</strong> para indicar cuántos packs de cada producto querés recibir por mes.</p>
+          <div class="subs-grid" id="subs-grid"></div>
+        </div>
+
+        <div class="subs-sidebar">
+          <div class="subs-summary-card reveal">
+            <h4 class="subs-summary-title">Tu selección mensual</h4>
+            <p class="subs-summary-empty" id="subs-summary-empty">Sumá productos con los botones <strong>+</strong></p>
+            <ul class="subs-summary-list" id="subs-summary-list"></ul>
+            <div class="subs-summary-footer" id="subs-summary-footer" style="display:none">
+              <div class="subs-total-row">
+                <span>Packs totales</span>
+                <strong id="subs-total-packs"></strong>
+              </div>
+              <div class="subs-total-row subs-total-weight">
+                <span>Peso total</span>
+                <strong id="subs-total-weight"></strong>
+              </div>
+            </div>
+          </div>
+
+          <form class="subs-form reveal" id="subs-form" novalidate>
+            <h4>Tus datos</h4>
+            <input type="hidden" name="_tipo" value="suscripcion-mensual">
+            <div class="form-group">
+              <label>Nombre completo *</label>
+              <input type="text" name="subs_nombre" required placeholder="Juan Pérez">
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" name="subs_email" required placeholder="juan@empresa.com">
+            </div>
+            <div class="form-group">
+              <label>Teléfono *</label>
+              <input type="tel" name="subs_telefono" required placeholder="+54 9 11 XXXX-XXXX">
+            </div>
+            <div class="form-group">
+              <label>Empresa / Negocio</label>
+              <input type="text" name="subs_empresa" placeholder="Mi Restaurante">
+            </div>
+            <div class="form-group">
+              <label>Notas</label>
+              <textarea name="subs_notas" rows="2" placeholder="Dirección de entrega, consultas..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-large subs-submit-btn" id="subs-submit-btn">
+              Suscribirme →
+            </button>
+            <p class="form-note">* Campos obligatorios. Te contactaremos a la brevedad.</p>
+            <div class="form-success" id="subs-success">
+              <div class="success-icon">✅</div>
+              <h4>¡Suscripción enviada!</h4>
+              <p>Recibimos tu solicitud. Nos comunicaremos para confirmar los detalles de entrega.</p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== CONTACTO / PEDIDO ==================== -->
   <section id="contacto" class="section section-alt">
     <div class="container">
@@ -418,6 +491,7 @@
           <li><a href="#productos">Productos</a></li>
           <li><a href="#recetas">Recetas</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#suscripcion">Suscripción</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </div>

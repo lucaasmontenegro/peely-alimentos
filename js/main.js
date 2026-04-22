@@ -270,3 +270,145 @@ function openMailtoFallback(data) {
 
 // ---- Init ----
 renderProducts('all');
+
+// ============================================
+//  SUSCRIPCIÓN MENSUAL
+// ============================================
+
+const subsQty = {};
+PRODUCTS.forEach(p => { subsQty[p.id] = 0; });
+
+function renderSubsGrid() {
+  const grid = document.getElementById('subs-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  PRODUCTS.forEach(p => {
+    const qty = subsQty[p.id];
+    const card = document.createElement('div');
+    card.className = 'subs-product-card' + (qty > 0 ? ' active' : '');
+    card.dataset.id = p.id;
+    card.innerHTML = `
+      <div class="subs-product-info">
+        <span class="subs-product-emoji">${p.emoji}</span>
+        <div>
+          <span class="subs-product-name">${p.name}</span>
+          <span class="subs-product-unit">500 g / unidad</span>
+        </div>
+      </div>
+      <div class="subs-stepper">
+        <button type="button" class="subs-stepper-btn subs-dec" data-id="${p.id}" ${qty === 0 ? 'disabled' : ''}>−</button>
+        <span class="subs-stepper-qty" id="subs-qty-${p.id}">${qty}</span>
+        <button type="button" class="subs-stepper-btn subs-inc" data-id="${p.id}">+</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll('.subs-inc').forEach(btn => {
+    btn.addEventListener('click', () => changeSubsQty(btn.dataset.id, 1));
+  });
+  grid.querySelectorAll('.subs-dec').forEach(btn => {
+    btn.addEventListener('click', () => changeSubsQty(btn.dataset.id, -1));
+  });
+}
+
+function changeSubsQty(id, delta) {
+  subsQty[id] = Math.max(0, subsQty[id] + delta);
+  renderSubsGrid();
+  updateSubsSummary();
+}
+
+function updateSubsSummary() {
+  const emptyEl   = document.getElementById('subs-summary-empty');
+  const listEl    = document.getElementById('subs-summary-list');
+  const footerEl  = document.getElementById('subs-summary-footer');
+  const packsEl   = document.getElementById('subs-total-packs');
+  const weightEl  = document.getElementById('subs-total-weight');
+
+  const selected = PRODUCTS.filter(p => subsQty[p.id] > 0);
+  const totalPacks = selected.reduce((sum, p) => sum + subsQty[p.id], 0);
+  const totalKg = (totalPacks * 0.5).toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 1 });
+
+  emptyEl.style.display  = selected.length === 0 ? 'block' : 'none';
+  footerEl.style.display = selected.length > 0  ? 'flex'  : 'none';
+
+  listEl.innerHTML = selected.map(p => `
+    <li class="subs-summary-item">
+      <span class="subs-summary-item-name">${p.emoji} ${p.name}</span>
+      <span class="subs-summary-item-qty">${subsQty[p.id]} pack${subsQty[p.id] > 1 ? 's' : ''}</span>
+    </li>`).join('');
+
+  packsEl.textContent = totalPacks;
+  weightEl.textContent = `${totalKg} kg`;
+}
+
+// ---- Subs form submission ----
+const subsForm      = document.getElementById('subs-form');
+const subsSubmitBtn = document.getElementById('subs-submit-btn');
+const subsSuccess   = document.getElementById('subs-success');
+
+subsForm.addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const selected = PRODUCTS.filter(p => subsQty[p.id] > 0);
+  if (selected.length === 0) {
+    alert('Por favor, seleccioná al menos un producto para tu suscripción.');
+    return;
+  }
+
+  const nombre   = subsForm.querySelector('[name="subs_nombre"]').value.trim();
+  const email    = subsForm.querySelector('[name="subs_email"]').value.trim();
+  const telefono = subsForm.querySelector('[name="subs_telefono"]').value.trim();
+  if (!nombre || !email || !telefono) {
+    alert('Por favor, completá los campos obligatorios (nombre, email y teléfono).');
+    return;
+  }
+
+  subsSubmitBtn.textContent = 'Enviando…';
+  subsSubmitBtn.disabled = true;
+
+  const data = new FormData(subsForm);
+  selected.forEach(p => data.set(`subs_producto_${p.id}`, `${subsQty[p.id]} pack(s) × 500g`));
+
+  try {
+    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method: 'POST',
+      body: data,
+      headers: { Accept: 'application/json' },
+    });
+    if (res.ok) {
+      subsForm.querySelector('.subs-submit-btn').style.display = 'none';
+      subsForm.querySelector('.form-note').style.display = 'none';
+      subsSuccess.classList.add('visible');
+    } else {
+      throw new Error('server_error');
+    }
+  } catch {
+    openSubsMailtoFallback(nombre, email, telefono,
+      subsForm.querySelector('[name="subs_empresa"]').value,
+      subsForm.querySelector('[name="subs_notas"]').value,
+      selected);
+    subsSubmitBtn.textContent = 'Suscribirme →';
+    subsSubmitBtn.disabled = false;
+  }
+});
+
+function openSubsMailtoFallback(nombre, email, telefono, empresa, notas, selected) {
+  let body = 'NUEVA SUSCRIPCIÓN MENSUAL – PEELY ALIMENTOS\n\n';
+  body += `Nombre:   ${nombre}\n`;
+  body += `Email:    ${email}\n`;
+  body += `Teléfono: ${telefono}\n`;
+  body += `Empresa:  ${empresa || '—'}\n\n`;
+  body += 'PRODUCTOS POR MES:\n';
+  selected.forEach(p => {
+    body += `  • ${p.name}: ${subsQty[p.id]} pack(s) × 500g = ${subsQty[p.id] * 0.5} kg\n`;
+  });
+  const totalKg = selected.reduce((sum, p) => sum + subsQty[p.id] * 0.5, 0);
+  body += `\nPeso total mensual: ${totalKg} kg\n`;
+  if (notas) body += `\nNotas: ${notas}`;
+
+  const subject = encodeURIComponent('Nueva Suscripción Mensual – Peely Alimentos');
+  window.location.href = `mailto:info@peelyalimentos.com.ar?subject=${subject}&body=${encodeURIComponent(body)}`;
+}
+
+renderSubsGrid();
