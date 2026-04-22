@@ -22,11 +22,11 @@
       </a>
       <ul class="nav-links" id="nav-links">
         <li><a href="#inicio" class="nav-link">Inicio</a></li>
-        <li><a href="#productos" class="nav-link">Productos</a></li>
+        <li><a href="#productos" class="nav-link">Catálogo</a></li>
+        <li><a href="#contacto" class="nav-link">Pedido</a></li>
         <li><a href="#recetas" class="nav-link">Recetas</a></li>
-        <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
         <li><a href="#suscripcion" class="nav-link">Suscripción</a></li>
-        <li><a href="#contacto" class="nav-link">Contacto</a></li>
+        <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
       </ul>
       <a href="#contacto" class="btn btn-primary nav-cta">Hacer Pedido</a>
       <button class="hamburger" id="hamburger" aria-label="Abrir menú">
@@ -95,8 +95,115 @@
     </div>
   </section>
 
+  <!-- ==================== CONTACTO / PEDIDO ==================== -->
+  <section id="contacto" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Pedidos</span>
+        <h2 class="section-title">Hacer un Pedido</h2>
+        <p class="section-subtitle">Completá el formulario y nos ponemos en contacto con vos a la brevedad.</p>
+      </div>
+      <div class="contacto-grid">
+
+        <div class="contact-info reveal">
+          <h3>Contacto directo</h3>
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <div>
+              <strong>Email</strong>
+              <p>info@peelyalimentos.com.ar</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📱</span>
+            <div>
+              <strong>WhatsApp</strong>
+              <p>+54 9 11 XXXX-XXXX</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <strong>Zona de distribución</strong>
+              <p>Todo el país</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">⏰</span>
+            <div>
+              <strong>Horario de atención</strong>
+              <p>Lunes a Viernes, 9 a 18 hs</p>
+            </div>
+          </div>
+        </div>
+
+        <form class="order-form reveal" id="order-form" novalidate>
+
+          <div class="form-section">
+            <h4>Tus datos</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Juan Pérez">
+              </div>
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required placeholder="juan@empresa.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="telefono">Teléfono *</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder="+54 9 11 XXXX-XXXX">
+              </div>
+              <div class="form-group">
+                <label for="empresa">Empresa / Negocio</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Mi Restaurante">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h4>Productos del pedido</h4>
+            <p class="form-hint">Cada unidad es un pack de <strong>500g</strong>. Usá los botones para indicar la cantidad.</p>
+            <div class="order-products-grid" id="order-products-grid"></div>
+          </div>
+
+          <div class="order-summary" id="order-summary" style="display:none">
+            <div class="order-summary-list" id="order-summary-list"></div>
+            <div class="order-summary-totals">
+              <span id="order-summary-packs"></span>
+              <span id="order-summary-weight"></span>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-group">
+              <label for="notas">Notas adicionales</label>
+              <textarea id="notas" name="notas" rows="3" placeholder="Dirección de entrega, frecuencia del pedido, consultas..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary btn-large" id="submit-btn">
+              Enviar Pedido →
+            </button>
+            <p class="form-note">* Campos obligatorios. Te contactaremos a la brevedad.</p>
+          </div>
+
+          <div class="form-success" id="form-success">
+            <div class="success-icon">✅</div>
+            <h4>¡Pedido enviado!</h4>
+            <p>Recibimos tu solicitud. Nos pondremos en contacto pronto.</p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== RECETAS ==================== -->
-  <section id="recetas" class="section section-alt">
+  <section id="recetas" class="section">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">Inspiración</span>
@@ -204,54 +311,33 @@
     </div>
   </section>
 
-  <!-- ==================== NOSOTROS ==================== -->
-  <section id="nosotros" class="section">
-    <div class="container">
-      <div class="nosotros-grid">
-        <div class="nosotros-text reveal">
-          <span class="section-tag">Nuestra historia</span>
-          <h2 class="section-title">¿Quiénes somos?</h2>
-          <p>En <strong>Peely Alimentos</strong> creemos que comer bien no tiene que ser complicado. Nacimos con la misión de proveer a restaurantes, caterings y negocios gastronómicos con ingredientes procesados y congelados de la más alta calidad.</p>
-          <p>Trabajamos con productores seleccionados para garantizar que cada vegetal que procesamos llegue a tu cocina en su punto óptimo de frescura y sabor.</p>
-          <p>Nuestra tecnología de congelado <strong>IQF</strong> (Individually Quick Frozen) preserva el color, la textura y los nutrientes originales de cada producto, asegurando resultados consistentes en cada preparación.</p>
-          <a href="#contacto" class="btn btn-primary" style="margin-top: 8px;">Contactarnos</a>
-        </div>
-        <div class="nosotros-values reveal">
-          <div class="value-card">
-            <div class="value-icon">🌱</div>
-            <h4>Origen Natural</h4>
-            <p>Trabajamos con productores seleccionados para garantizar vegetales de primera calidad desde el campo.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-icon">❄️</div>
-            <h4>Tecnología IQF</h4>
-            <p>El congelado individual preserva nutrientes, textura y sabor al máximo, sin aditivos ni conservantes.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-icon">⏱️</div>
-            <h4>Ahorro de Tiempo</h4>
-            <p>Vegetales listos para usar. Sin pelado, sin corte, sin desperdicio. Más eficiencia en tu cocina.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-icon">🚚</div>
-            <h4>Distribución</h4>
-            <p>Llegamos a todo el país con cadena de frío garantizada y tiempos de entrega confiables.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ==================== SUSCRIPCIÓN MENSUAL ==================== -->
   <section id="suscripcion" class="section section-alt">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">📦 Entrega mensual</span>
-        <h2 class="section-title">Suscripción Mensual</h2>
+        <div class="subs-title-row">
+          <h2 class="section-title">Suscripción Mensual</h2>
+          <div class="subs-badge">
+            <div class="subs-badge-inner">
+              <span class="subs-badge-pct">20%</span>
+              <span class="subs-badge-label">DESCUENTO</span>
+            </div>
+          </div>
+        </div>
         <p class="section-subtitle">Elegí tus productos, fijamos las cantidades y los recibís todos los meses sin preocuparte.</p>
       </div>
 
-      <div class="subs-layout">
+      <div class="subs-cta reveal">
+        <div class="subs-cta-benefits">
+          <span>📦 Entrega mensual garantizada</span>
+          <span>❄️ Cadena de frío incluida</span>
+          <span>✏️ Modificá o cancelá cuando quieras</span>
+        </div>
+        <button class="btn btn-primary btn-large" id="subs-open-btn">Armar mi suscripción →</button>
+      </div>
+
+      <div class="subs-layout" id="subs-layout" style="display:none">
 
         <div class="subs-products reveal">
           <p class="subs-hint">Cada unidad es un pack de <strong>500g</strong>. Usá los botones <strong>+</strong> y <strong>−</strong> para indicar cuántos packs de cada producto querés recibir por mes.</p>
@@ -263,6 +349,7 @@
             <h4 class="subs-summary-title">Tu selección mensual</h4>
             <p class="subs-summary-empty" id="subs-summary-empty">Sumá productos con los botones <strong>+</strong></p>
             <ul class="subs-summary-list" id="subs-summary-list"></ul>
+            <p class="subs-min-warning" id="subs-min-warning" style="display:none">Mínimo 6 packs en total para suscribirte.</p>
             <div class="subs-summary-footer" id="subs-summary-footer" style="display:none">
               <div class="subs-total-row">
                 <span>Packs totales</span>
@@ -314,165 +401,40 @@
     </div>
   </section>
 
-  <!-- ==================== CONTACTO / PEDIDO ==================== -->
-  <section id="contacto" class="section section-alt">
+  <!-- ==================== NOSOTROS ==================== -->
+  <section id="nosotros" class="section">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Pedidos</span>
-        <h2 class="section-title">Hacer un Pedido</h2>
-        <p class="section-subtitle">Completá el formulario y nos ponemos en contacto con vos a la brevedad.</p>
-      </div>
-      <div class="contacto-grid">
-
-        <div class="contact-info reveal">
-          <h3>Contacto directo</h3>
-          <div class="contact-item">
-            <span class="contact-icon">📧</span>
-            <div>
-              <strong>Email</strong>
-              <p>info@peelyalimentos.com.ar</p>
-            </div>
+      <div class="nosotros-grid">
+        <div class="nosotros-text reveal">
+          <span class="section-tag">Nuestra historia</span>
+          <h2 class="section-title">¿Quiénes somos?</h2>
+          <p>En <strong>Peely Alimentos</strong> creemos que comer bien no tiene que ser complicado. Nacimos con la misión de proveer a restaurantes, caterings y negocios gastronómicos con ingredientes procesados y congelados de la más alta calidad.</p>
+          <p>Trabajamos con productores seleccionados para garantizar que cada vegetal que procesamos llegue a tu cocina en su punto óptimo de frescura y sabor.</p>
+          <p>Nuestra tecnología de congelado <strong>IQF</strong> (Individually Quick Frozen) preserva el color, la textura y los nutrientes originales de cada producto, asegurando resultados consistentes en cada preparación.</p>
+          <a href="#contacto" class="btn btn-primary" style="margin-top: 8px;">Contactarnos</a>
+        </div>
+        <div class="nosotros-values reveal">
+          <div class="value-card">
+            <div class="value-icon">🌱</div>
+            <h4>Origen Natural</h4>
+            <p>Trabajamos con productores seleccionados para garantizar vegetales de primera calidad desde el campo.</p>
           </div>
-          <div class="contact-item">
-            <span class="contact-icon">📱</span>
-            <div>
-              <strong>WhatsApp</strong>
-              <p>+54 9 11 XXXX-XXXX</p>
-            </div>
+          <div class="value-card">
+            <div class="value-icon">❄️</div>
+            <h4>Tecnología IQF</h4>
+            <p>El congelado individual preserva nutrientes, textura y sabor al máximo, sin aditivos ni conservantes.</p>
           </div>
-          <div class="contact-item">
-            <span class="contact-icon">📍</span>
-            <div>
-              <strong>Zona de distribución</strong>
-              <p>Todo el país</p>
-            </div>
+          <div class="value-card">
+            <div class="value-icon">⏱️</div>
+            <h4>Ahorro de Tiempo</h4>
+            <p>Vegetales listos para usar. Sin pelado, sin corte, sin desperdicio. Más eficiencia en tu cocina.</p>
           </div>
-          <div class="contact-item">
-            <span class="contact-icon">⏰</span>
-            <div>
-              <strong>Horario de atención</strong>
-              <p>Lunes a Viernes, 9 a 18 hs</p>
-            </div>
+          <div class="value-card">
+            <div class="value-icon">🚚</div>
+            <h4>Distribución</h4>
+            <p>Llegamos a todo el país con cadena de frío garantizada y tiempos de entrega confiables.</p>
           </div>
         </div>
-
-        <form class="order-form reveal" id="order-form" novalidate>
-
-          <div class="form-section">
-            <h4>Tus datos</h4>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="nombre">Nombre completo *</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Juan Pérez">
-              </div>
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" required placeholder="juan@empresa.com">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="telefono">Teléfono *</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="+54 9 11 XXXX-XXXX">
-              </div>
-              <div class="form-group">
-                <label for="empresa">Empresa / Negocio</label>
-                <input type="text" id="empresa" name="empresa" placeholder="Mi Restaurante">
-              </div>
-            </div>
-          </div>
-
-          <div class="form-section">
-            <h4>Productos del pedido</h4>
-            <p class="form-hint">Seleccioná los productos y especificá la cantidad aproximada en kg.</p>
-            <div class="products-order-grid">
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_cebolla_cubitos">
-                  <span>🧅 Cebolla Picada cubitos</span>
-                </label>
-                <input type="number" name="qty_cebolla_cubitos" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_cebolla_juliana">
-                  <span>🧅 Cebolla Cortada juliana</span>
-                </label>
-                <input type="number" name="qty_cebolla_juliana" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_mix_wok">
-                  <span>🥢 Mix Wok</span>
-                </label>
-                <input type="number" name="qty_mix_wok" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_mix_sopa">
-                  <span>🍲 Mix para Sopa</span>
-                </label>
-                <input type="number" name="qty_mix_sopa" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_mix_horno">
-                  <span>🥘 Mix para Horno</span>
-                </label>
-                <input type="number" name="qty_mix_horno" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_mix_pimientos">
-                  <span>🫑 Mix Pimientos</span>
-                </label>
-                <input type="number" name="qty_mix_pimientos" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_brocoli">
-                  <span>🥦 Brócoli</span>
-                </label>
-                <input type="number" name="qty_brocoli" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_espinaca">
-                  <span>🥬 Espinaca cruda</span>
-                </label>
-                <input type="number" name="qty_espinaca" min="1" placeholder="kg" class="qty-input">
-              </div>
-              <div class="product-order-item">
-                <label class="product-checkbox">
-                  <input type="checkbox" name="producto_papa">
-                  <span>🍟 Papa francesa</span>
-                </label>
-                <input type="number" name="qty_papa" min="1" placeholder="kg" class="qty-input">
-              </div>
-            </div>
-          </div>
-
-          <div class="form-section">
-            <div class="form-group">
-              <label for="notas">Notas adicionales</label>
-              <textarea id="notas" name="notas" rows="3" placeholder="Dirección de entrega, frecuencia del pedido, consultas..."></textarea>
-            </div>
-          </div>
-
-          <div class="form-submit">
-            <button type="submit" class="btn btn-primary btn-large" id="submit-btn">
-              Enviar Pedido →
-            </button>
-            <p class="form-note">* Campos obligatorios. Te contactaremos a la brevedad.</p>
-          </div>
-
-          <div class="form-success" id="form-success">
-            <div class="success-icon">✅</div>
-            <h4>¡Pedido enviado!</h4>
-            <p>Recibimos tu solicitud. Nos pondremos en contacto pronto.</p>
-          </div>
-
-        </form>
       </div>
     </div>
   </section>
@@ -488,11 +450,11 @@
         <h4>Navegación</h4>
         <ul>
           <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#productos">Productos</a></li>
+          <li><a href="#productos">Catálogo</a></li>
+          <li><a href="#contacto">Pedido</a></li>
           <li><a href="#recetas">Recetas</a></li>
-          <li><a href="#nosotros">Nosotros</a></li>
           <li><a href="#suscripcion">Suscripción</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
         </ul>
       </div>
       <div class="footer-contact">

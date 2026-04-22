@@ -111,31 +111,86 @@ function renderProducts(filter) {
 
   // Bind add-to-order buttons
   grid.querySelectorAll('.product-order-btn').forEach(btn => {
-    btn.addEventListener('click', () => addToOrder(btn.dataset.id, btn.dataset.name));
+    btn.addEventListener('click', () => addToOrder(btn.dataset.id));
   });
 }
 
-// ---- Add product to order form + scroll ----
-function addToOrder(id, name) {
-  const checkbox = document.querySelector(`input[name="producto_${id}"]`);
-  if (!checkbox) return;
+// ---- Order form stepper ----
+const orderQty = {};
+PRODUCTS.forEach(p => { orderQty[p.id] = 0; });
 
-  checkbox.checked = true;
-  syncOrderItemStyle(checkbox);
+function renderOrderGrid() {
+  const grid = document.getElementById('order-products-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  PRODUCTS.forEach(p => {
+    const qty = orderQty[p.id];
+    const card = document.createElement('div');
+    card.className = 'subs-product-card' + (qty > 0 ? ' active' : '');
+    card.dataset.id = p.id;
+    card.innerHTML = `
+      <div class="subs-product-info">
+        <span class="subs-product-emoji">${p.emoji}</span>
+        <div>
+          <span class="subs-product-name">${p.name}</span>
+          <span class="subs-product-unit">500 g / unidad</span>
+        </div>
+      </div>
+      <div class="subs-stepper">
+        <button type="button" class="subs-stepper-btn order-dec" data-id="${p.id}" ${qty === 0 ? 'disabled' : ''}>−</button>
+        <span class="subs-stepper-qty">${qty}</span>
+        <button type="button" class="subs-stepper-btn order-inc" data-id="${p.id}">+</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll('.order-inc').forEach(btn => {
+    btn.addEventListener('click', () => changeOrderQty(btn.dataset.id, 1));
+  });
+  grid.querySelectorAll('.order-dec').forEach(btn => {
+    btn.addEventListener('click', () => changeOrderQty(btn.dataset.id, -1));
+  });
+}
+
+function changeOrderQty(id, delta) {
+  orderQty[id] = Math.max(0, orderQty[id] + delta);
+  renderOrderGrid();
+  updateOrderSummary();
+}
+
+function updateOrderSummary() {
+  const summaryEl = document.getElementById('order-summary');
+  const listEl    = document.getElementById('order-summary-list');
+  const packsEl   = document.getElementById('order-summary-packs');
+  const weightEl  = document.getElementById('order-summary-weight');
+
+  const selected   = PRODUCTS.filter(p => orderQty[p.id] > 0);
+  const totalPacks = selected.reduce((sum, p) => sum + orderQty[p.id], 0);
+  const totalKg    = (totalPacks * 0.5).toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 1 });
+
+  summaryEl.style.display = selected.length > 0 ? 'block' : 'none';
+
+  listEl.innerHTML = selected.map(p =>
+    `<span class="order-summary-item">${p.emoji} ${p.name} <strong>${orderQty[p.id]}</strong></span>`
+  ).join('');
+
+  packsEl.textContent = `${totalPacks} pack${totalPacks !== 1 ? 's' : ''}`;
+  weightEl.textContent = `${totalKg} kg`;
+}
+
+// ---- Add product to order form + scroll ----
+function addToOrder(id) {
+  orderQty[id] = Math.max(1, orderQty[id] + 1);
+  renderOrderGrid();
+  updateOrderSummary();
 
   document.getElementById('contacto').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   setTimeout(() => {
-    const item = checkbox.closest('.product-order-item');
-    if (item) item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    const card = document.querySelector(`#order-products-grid [data-id="${id}"]`);
+    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 700);
-}
-
-// ---- Sync checked state styling ----
-function syncOrderItemStyle(checkbox) {
-  const item = checkbox.closest('.product-order-item');
-  if (!item) return;
-  item.classList.toggle('checked', checkbox.checked);
 }
 
 // ---- Filter tabs ----
@@ -199,11 +254,6 @@ const revealObs = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// ---- Order form checkbox sync ----
-document.querySelectorAll('.product-order-item input[type="checkbox"]').forEach(cb => {
-  cb.addEventListener('change', () => syncOrderItemStyle(cb));
-});
-
 // ---- Form submission ----
 const form       = document.getElementById('order-form');
 const submitBtn  = document.getElementById('submit-btn');
@@ -212,8 +262,8 @@ const successMsg = document.getElementById('form-success');
 form.addEventListener('submit', async e => {
   e.preventDefault();
 
-  const checked = form.querySelectorAll('input[type="checkbox"]:checked');
-  if (checked.length === 0) {
+  const hasProducts = PRODUCTS.some(p => orderQty[p.id] > 0);
+  if (!hasProducts) {
     alert('Por favor, seleccioná al menos un producto.');
     return;
   }
@@ -222,6 +272,9 @@ form.addEventListener('submit', async e => {
   submitBtn.disabled = true;
 
   const data = new FormData(form);
+  PRODUCTS.forEach(p => {
+    if (orderQty[p.id] > 0) data.set(`producto_${p.id}`, `${orderQty[p.id]} pack(s) × 500g`);
+  });
 
   try {
     // CONFIGURACIÓN: reemplazá "YOUR_FORM_ID" con el ID de tu formulario en Formspree.
@@ -255,9 +308,8 @@ function openMailtoFallback(data) {
   body += 'PRODUCTOS SOLICITADOS:\n';
 
   PRODUCTS.forEach(p => {
-    if (data.get(`producto_${p.id}`)) {
-      const qty = data.get(`qty_${p.id}`);
-      body += `  • ${p.name}: ${qty ? qty + ' kg' : 'cantidad a confirmar'}\n`;
+    if (orderQty[p.id] > 0) {
+      body += `  • ${p.name}: ${orderQty[p.id]} pack(s) × 500g = ${orderQty[p.id] * 0.5} kg\n`;
     }
   });
 
@@ -270,6 +322,7 @@ function openMailtoFallback(data) {
 
 // ---- Init ----
 renderProducts('all');
+renderOrderGrid();
 
 // ============================================
 //  SUSCRIPCIÓN MENSUAL
@@ -340,6 +393,9 @@ function updateSubsSummary() {
 
   packsEl.textContent = totalPacks;
   weightEl.textContent = `${totalKg} kg`;
+
+  const minEl = document.getElementById('subs-min-warning');
+  if (minEl) minEl.style.display = totalPacks > 0 && totalPacks < 6 ? 'block' : 'none';
 }
 
 // ---- Subs form submission ----
@@ -351,8 +407,13 @@ subsForm.addEventListener('submit', async e => {
   e.preventDefault();
 
   const selected = PRODUCTS.filter(p => subsQty[p.id] > 0);
-  if (selected.length === 0) {
+  const totalPacks = selected.reduce((sum, p) => sum + subsQty[p.id], 0);
+  if (totalPacks === 0) {
     alert('Por favor, seleccioná al menos un producto para tu suscripción.');
+    return;
+  }
+  if (totalPacks < 6) {
+    alert(`El mínimo para suscribirse es 6 packs en total. Llevas ${totalPacks}.`);
     return;
   }
 
@@ -412,3 +473,13 @@ function openSubsMailtoFallback(nombre, email, telefono, empresa, notas, selecte
 }
 
 renderSubsGrid();
+
+// ---- Subs expand toggle ----
+document.getElementById('subs-open-btn').addEventListener('click', () => {
+  const layout = document.getElementById('subs-layout');
+  const cta    = document.querySelector('.subs-cta');
+  cta.style.display    = 'none';
+  layout.style.display = 'grid';
+  layout.classList.add('subs-layout-entering');
+  layout.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
