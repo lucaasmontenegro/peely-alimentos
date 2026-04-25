@@ -572,34 +572,136 @@ section[id] { scroll-margin-top: 80px; }
 /* ============================================
    NOSOTROS
    ============================================ */
-.nosotros-grid {
+.nosotros-dark {
+  background: #242424;
+}
+
+.nosotros-new-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 72px;
+  gap: 80px;
   align-items: start;
 }
 
-.nosotros-text .section-tag { display: block; text-align: left; }
-.nosotros-text .section-title { text-align: left; margin-bottom: 20px; }
-.nosotros-text p { color: var(--gray); line-height: 1.8; margin-bottom: 15px; }
-
-.nosotros-values {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+.nosotros-tag {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #6aaa82;
+  margin-bottom: 20px;
 }
 
-.value-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+.nosotros-headline {
+  font-family: var(--font-head);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.nosotros-headline em {
+  font-style: italic;
+  color: #6aaa82;
+}
+
+.nosotros-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 24px;
+}
+
+.nosotros-left p {
+  color: rgba(255,255,255,0.65);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+.nosotros-quote {
+  border-left: 3px solid #6aaa82;
+  padding-left: 16px;
+  margin: 24px 0;
+  font-style: italic;
+  color: #6aaa82;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.nosotros-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  color: var(--white);
+  padding: 12px 24px;
   border-radius: var(--radius);
-  padding: 22px 20px;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: background 0.2s, border-color 0.2s;
 }
-.value-card:hover { border-color: rgba(21,115,61,0.3); box-shadow: var(--shadow); }
-.value-icon { font-size: 1.7rem; margin-bottom: 12px; }
-.value-card h4 { font-size: 0.92rem; margin-bottom: 7px; }
-.value-card p { font-size: 0.84rem; color: var(--gray); line-height: 1.55; }
+
+.nosotros-btn:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.6);
+}
+
+.nosotros-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.nosotros-item {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.nosotros-item:first-child { padding-top: 0; }
+.nosotros-item:last-child  { border-bottom: none; }
+
+.nosotros-num {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6aaa82;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.nosotros-item h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.nosotros-item p {
+  font-size: 0.87rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Responsive nosotros */
+@media (max-width: 768px) {
+  .nosotros-new-grid { grid-template-columns: 1fr; gap: 40px; }
+  .nosotros-headline { font-size: 2rem; }
+}
 
 /* ============================================
    CONTACTO / PEDIDO
