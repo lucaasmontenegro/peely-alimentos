@@ -272,12 +272,19 @@ form.addEventListener('submit', async e => {
 
 function openMailtoFallback(data) {
   let body = 'NUEVO PEDIDO – PEELY ALIMENTOS\n\n';
-  body += `Nombre:   ${data.get('nombre')}\n`;
+  body += `Nombre:   ${data.get('nombre')} ${data.get('apellido')}\n`;
   body += `Email:    ${data.get('email')}\n`;
   body += `Teléfono: ${data.get('telefono')}\n`;
-  body += `Empresa:  ${data.get('empresa') || '—'}\n\n`;
-  body += 'PRODUCTOS SOLICITADOS:\n';
 
+  let dir = `${data.get('calle')} ${data.get('numero')}`;
+  if (data.get('piso'))  dir += `, Piso ${data.get('piso')}`;
+  if (data.get('depto')) dir += `, Depto ${data.get('depto')}`;
+  body += `Dirección: ${dir}\n\n`;
+
+  body += `, ${data.get('ciudad')}\n`;
+  if (data.get('entrega_express')) body += '⚡ SOLICITA ENTREGA EXPRESS\n\n';
+
+  body += 'PRODUCTOS SOLICITADOS:\n';
   PRODUCTS.forEach(p => {
     if (orderQty[p.id] > 0) {
       body += `  • ${p.name}: ${orderQty[p.id]} pack(s) × 500g = ${orderQty[p.id] * 0.5} kg\n`;
@@ -288,7 +295,7 @@ function openMailtoFallback(data) {
   if (notas) body += `\nNotas: ${notas}`;
 
   const subject = encodeURIComponent('Nuevo Pedido – Peely Alimentos');
-  window.location.href = `mailto:info@peelyalimentos.com.ar?subject=${subject}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:contactos@peelyalimentos.com?subject=${subject}&body=${encodeURIComponent(body)}`;
 }
 
 // ---- Init ----
@@ -389,10 +396,14 @@ subsForm.addEventListener('submit', async e => {
   }
 
   const nombre   = subsForm.querySelector('[name="subs_nombre"]').value.trim();
+  const apellido = subsForm.querySelector('[name="subs_apellido"]').value.trim();
   const email    = subsForm.querySelector('[name="subs_email"]').value.trim();
   const telefono = subsForm.querySelector('[name="subs_telefono"]').value.trim();
-  if (!nombre || !email || !telefono) {
-    alert('Por favor, completá los campos obligatorios (nombre, email y teléfono).');
+  const calle    = subsForm.querySelector('[name="subs_calle"]').value.trim();
+  const numero   = subsForm.querySelector('[name="subs_numero"]').value.trim();
+  const ciudad   = subsForm.querySelector('[name="subs_ciudad"]').value.trim();
+  if (!nombre || !apellido || !email || !telefono || !calle || !numero || !ciudad) {
+    alert('Por favor, completá todos los campos obligatorios.');
     return;
   }
 
@@ -416,8 +427,12 @@ subsForm.addEventListener('submit', async e => {
       throw new Error('server_error');
     }
   } catch {
-    openSubsMailtoFallback(nombre, email, telefono,
-      subsForm.querySelector('[name="subs_empresa"]').value,
+    openSubsMailtoFallback(
+      nombre, apellido, email, telefono,
+      calle, numero,
+      subsForm.querySelector('[name="subs_piso"]').value,
+      subsForm.querySelector('[name="subs_depto"]').value,
+      ciudad,
       subsForm.querySelector('[name="subs_notas"]').value,
       selected);
     subsSubmitBtn.textContent = 'Suscribirme →';
@@ -425,12 +440,15 @@ subsForm.addEventListener('submit', async e => {
   }
 });
 
-function openSubsMailtoFallback(nombre, email, telefono, empresa, notas, selected) {
+function openSubsMailtoFallback(nombre, apellido, email, telefono, calle, numero, piso, depto, ciudad, notas, selected) {
   let body = 'NUEVA SUSCRIPCIÓN MENSUAL – PEELY ALIMENTOS\n\n';
-  body += `Nombre:   ${nombre}\n`;
+  body += `Nombre:   ${nombre} ${apellido}\n`;
   body += `Email:    ${email}\n`;
   body += `Teléfono: ${telefono}\n`;
-  body += `Empresa:  ${empresa || '—'}\n\n`;
+  let dir = `${calle} ${numero}`;
+  if (piso)  dir += `, Piso ${piso}`;
+  if (depto) dir += `, Depto ${depto}`;
+  body += `Dirección: ${dir}, ${ciudad}\n\n`;
   body += 'PRODUCTOS POR MES:\n';
   selected.forEach(p => {
     body += `  • ${p.name}: ${subsQty[p.id]} pack(s) × 500g = ${subsQty[p.id] * 0.5} kg\n`;
@@ -440,7 +458,7 @@ function openSubsMailtoFallback(nombre, email, telefono, empresa, notas, selecte
   if (notas) body += `\nNotas: ${notas}`;
 
   const subject = encodeURIComponent('Nueva Suscripción Mensual – Peely Alimentos');
-  window.location.href = `mailto:info@peelyalimentos.com.ar?subject=${subject}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:contactos@peelyalimentos.com?subject=${subject}&body=${encodeURIComponent(body)}`;
 }
 
 renderSubsGrid();
