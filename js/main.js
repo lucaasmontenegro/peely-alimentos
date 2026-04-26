@@ -173,14 +173,132 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
-// ---- Recipe toggle ----
-document.querySelectorAll('.recipe-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = document.getElementById(btn.dataset.target);
-    const open = target.classList.toggle('visible');
-    btn.textContent = open ? 'Ocultar receta ↑' : 'Ver receta ↓';
+// ---- Recipe data ----
+const RECIPES = {
+  wok: {
+    icon: '🥢',
+    title: 'Salteado de Vegetales al Wok',
+    time: '15 min', diff: 'Fácil', diffCls: 'easy',
+    desc: 'Un salteado rápido y nutritivo con el sabor del Asia en tu cocina. Sin precocción, listo al fuego.',
+    product: 'Mix Wok Peely',
+    img: 'assets/images/recetas/receta-wok.png',
+    imgAlt: 'Salteado de Vegetales al Wok',
+    videoId: '7630175689978776850',
+    steps: [
+      'Calentar un wok o sartén grande a fuego alto con un chorro de aceite.',
+      'Agregar el Mix Wok Peely directamente congelado.',
+      'Saltear 5–7 minutos revolviendo constantemente.',
+      'Condimentar con salsa de soja, ajo y jengibre al gusto.',
+      'Servir inmediatamente.',
+    ],
+  },
+  sopa: {
+    icon: '🍲',
+    title: 'Sopa Casera de Vegetales',
+    time: '25 min', diff: 'Fácil', diffCls: 'easy',
+    desc: 'Una sopa reconfortante lista en minutos, ideal para el invierno o como entrada de un menú.',
+    product: 'Mix para Sopa Peely',
+    img: 'assets/images/recetas/receta-wok.png',
+    imgAlt: 'Sopa Casera de Vegetales',
+    videoId: '7630175689978776850',
+    steps: [
+      'Llevar 1 litro de caldo de verduras a hervor.',
+      'Agregar el Mix para Sopa Peely.',
+      'Cocinar 15–20 minutos a fuego medio.',
+      'Condimentar con sal, pimienta y perejil fresco.',
+      'Servir caliente.',
+    ],
+  },
+  brocoli: {
+    icon: '🥦',
+    title: 'Brócoli Gratinado',
+    time: '30 min', diff: 'Fácil', diffCls: 'easy',
+    desc: 'Un clásico irresistible: brócoli tierno cubierto de queso derretido y gratinado al horno.',
+    product: 'Brócoli Peely',
+    img: 'assets/images/recetas/receta-wok.png',
+    imgAlt: 'Brócoli Gratinado',
+    videoId: '7630175689978776850',
+    steps: [
+      'Precalentar el horno a 200 °C.',
+      'Descongelar levemente el Brócoli Peely.',
+      'Disponer en fuente para horno, cubrir con crema y queso rallado.',
+      'Salpimentar y agregar nuez moscada al gusto.',
+      'Hornear 20 minutos hasta gratinar.',
+    ],
+  },
+  tortilla: {
+    icon: '🫑',
+    title: 'Tortilla de Espinaca y Pimientos',
+    time: '20 min', diff: 'Fácil', diffCls: 'easy',
+    desc: 'Una tortilla colorida y nutritiva. Perfecta para cualquier comida del día, con muy poco esfuerzo.',
+    product: 'Espinaca + Mix Pimientos Peely',
+    img: 'assets/images/recetas/receta-wok.png',
+    imgAlt: 'Tortilla de Espinaca y Pimientos',
+    videoId: '7630175689978776850',
+    steps: [
+      'Saltear Espinaca y Mix Pimientos Peely en sartén con aceite, 5 min.',
+      'Batir 4 huevos con sal y pimienta.',
+      'Verter los huevos sobre los vegetales salteados.',
+      'Cocinar a fuego medio-bajo, 4–5 min por cada lado.',
+      'Servir caliente o a temperatura ambiente.',
+    ],
+  },
+};
+
+let currentFeaturedId = 'wok';
+
+function renderRecipeCards() {
+  const grid = document.querySelector('.recipes-grid');
+  if (!grid) return;
+
+  const ids = Object.keys(RECIPES).filter(id => id !== currentFeaturedId);
+  grid.innerHTML = ids.map((id, i) => {
+    const r = RECIPES[id];
+    return `
+      <div class="recipe-card reveal visible" data-recipe="${id}" style="transition-delay: ${i * 0.1}s">
+        <div class="recipe-icon">${r.icon}</div>
+        <div class="recipe-meta">
+          <span>⏱ ${r.time}</span>
+          <span class="recipe-diff ${r.diffCls}">${r.diff}</span>
+        </div>
+        <h3>${r.title}</h3>
+        <p>${r.desc}</p>
+        <div class="recipe-product">Producto: <strong>${r.product}</strong></div>
+        <button class="btn btn-ghost recipe-select" data-recipe="${id}">Ver receta →</button>
+      </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.recipe-select').forEach(btn => {
+    btn.addEventListener('click', () => showFeaturedRecipe(btn.dataset.recipe));
   });
-});
+}
+
+function showFeaturedRecipe(id) {
+  const r = RECIPES[id];
+  if (!r) return;
+
+  currentFeaturedId = id;
+
+  document.getElementById('recipe-featured-title').textContent = r.title;
+
+  const img = document.getElementById('recipe-featured-img');
+  img.src = r.img;
+  img.alt = r.imgAlt;
+
+  document.getElementById('recipe-featured-meta').innerHTML =
+    `<span>⏱ ${r.time}</span><span class="recipe-diff ${r.diffCls}">${r.diff}</span>`;
+
+  document.getElementById('recipe-featured-desc').textContent = r.desc;
+  document.getElementById('recipe-featured-product').innerHTML = `Producto: <strong>${r.product}</strong>`;
+  document.getElementById('recipe-featured-steps').innerHTML = r.steps.map(s => `<li>${s}</li>`).join('');
+
+  const iframe = document.getElementById('recipe-tiktok-iframe');
+  iframe.src = `https://www.tiktok.com/embed/v2/${r.videoId}`;
+
+  renderRecipeCards();
+
+  document.getElementById('recipe-featured-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 // ---- Navbar scroll state ----
 const navbar = document.getElementById('navbar');
@@ -301,6 +419,7 @@ function openMailtoFallback(data) {
 // ---- Init ----
 renderProducts('all');
 renderOrderGrid();
+renderRecipeCards();
 
 // ============================================
 //  SUSCRIPCIÓN MENSUAL

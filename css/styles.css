@@ -275,7 +275,7 @@ section[id] { scroll-margin-top: 80px; }
 /* ============================================
    FEATURES BAR
    ============================================ */
-.features-bar { background: var(--primary); padding: 18px 0; }
+.features-bar { background: #242424; padding: 18px 0; }
 
 .features-grid {
   display: grid;
@@ -484,12 +484,20 @@ section[id] { scroll-margin-top: 80px; }
 }
 
 /* Featured recipe */
+.recipe-featured-wrapper {
+  background: rgba(21, 115, 61, 0.06);
+  border: 1px solid rgba(21, 115, 61, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 32px;
+  scroll-margin-top: 100px;
+}
+
 .recipe-featured {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 24px;
   align-items: stretch;
-  margin-bottom: 32px;
 }
 
 .recipe-featured-left {
@@ -539,35 +547,42 @@ section[id] { scroll-margin-top: 80px; }
 }
 
 .recipe-video-header {
-  padding: 16px 20px;
+  padding: 18px 20px;
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--dark);
-  border-bottom: 1px solid var(--border);
+  font-size: 1.25rem;
+  color: var(--primary);
+  border-bottom: 2px solid rgba(21, 115, 61, 0.15);
+  text-align: center;
+  letter-spacing: 0.3px;
   flex-shrink: 0;
 }
 
-.recipe-featured-right .tiktok-embed {
-  margin: 0 !important;
-  padding: 0 !important;
-  display: block;
+.recipe-video-iframe-wrap {
   flex: 1;
-  width: fit-content;
+  display: flex;
+  align-items: stretch;
+  padding: 12px;
 }
 
-.recipe-steps {
-  display: none;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  animation: fadeUp 0.3s ease;
+#recipe-tiktok-iframe {
+  width: 325px;
+  min-height: 560px;
+  border: none;
+  border-radius: 8px;
+  display: block;
 }
-.recipe-steps.visible { display: block; }
-.recipe-steps ol { list-style: decimal; padding-left: 18px; }
-.recipe-steps li { font-size: 0.85rem; color: var(--gray); line-height: 1.65; margin-bottom: 5px; }
 
-.recipe-video .tiktok-embed { margin: 0 auto; }
+.recipe-card.active {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(21, 115, 61, 0.15);
+}
+
+.recipe-card.active .recipe-select {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+}
 
 /* ============================================
    NOSOTROS
@@ -1127,6 +1142,7 @@ section[id] { scroll-margin-top: 80px; }
   .feature-item { font-size: 0.82rem; }
 
   .recipe-featured { grid-template-columns: 1fr; }
+  .recipe-featured-wrapper { padding: 16px; }
   .recipes-grid { grid-template-columns: 1fr; }
 
   .nosotros-values { grid-template-columns: 1fr 1fr; }

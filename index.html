@@ -255,18 +255,19 @@
         <p class="section-subtitle">Descubrí lo que podés hacer con nuestros productos en minutos.</p>
       </div>
       <!-- Receta destacada: imagen + video -->
-      <div class="recipe-featured reveal">
+      <div class="recipe-featured-wrapper reveal" id="recipe-featured-wrapper">
+      <div class="recipe-featured">
         <div class="recipe-featured-left">
-          <div class="recipe-video-header">Salteado de Vegetales al Wok</div>
-          <img src="assets/images/recetas/receta-wok.png" alt="Salteado de Vegetales al Wok" class="recipe-featured-img">
+          <div class="recipe-video-header" id="recipe-featured-title">Salteado de Vegetales al Wok</div>
+          <img src="assets/images/recetas/receta-wok.png" alt="Salteado de Vegetales al Wok" class="recipe-featured-img" id="recipe-featured-img">
           <div class="recipe-featured-info">
-            <div class="recipe-meta">
+            <div class="recipe-meta" id="recipe-featured-meta">
               <span>⏱ 15 min</span>
               <span class="recipe-diff easy">Fácil</span>
             </div>
-            <p>Un salteado rápido y nutritivo con el sabor del Asia en tu cocina. Sin precocción, listo al fuego.</p>
-            <div class="recipe-product">Producto: <strong>Mix Wok Peely</strong></div>
-            <ol class="recipe-steps-list">
+            <p id="recipe-featured-desc">Un salteado rápido y nutritivo con el sabor del Asia en tu cocina. Sin precocción, listo al fuego.</p>
+            <div class="recipe-product" id="recipe-featured-product">Producto: <strong>Mix Wok Peely</strong></div>
+            <ol class="recipe-steps-list" id="recipe-featured-steps">
               <li>Calentar un wok o sartén grande a fuego alto con un chorro de aceite.</li>
               <li>Agregar el Mix Wok Peely directamente congelado.</li>
               <li>Saltear 5–7 minutos revolviendo constantemente.</li>
@@ -277,81 +278,19 @@
         </div>
         <div class="recipe-featured-right">
           <div class="recipe-video-header">Video de la Receta</div>
-          <blockquote class="tiktok-embed"
-            cite="https://www.tiktok.com/@lucaasmontenegro/video/7630175689978776850"
-            data-video-id="7630175689978776850">
-            <section></section>
-          </blockquote>
+          <div id="recipe-video-container" class="recipe-video-iframe-wrap">
+            <iframe id="recipe-tiktok-iframe"
+              src="https://www.tiktok.com/embed/v2/7630175689978776850"
+              frameborder="0"
+              allow="fullscreen; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
         </div>
       </div>
-
-      <!-- Otras recetas -->
-      <div class="recipes-grid">
-
-        <div class="recipe-card reveal">
-          <div class="recipe-icon">🍲</div>
-          <div class="recipe-meta">
-            <span>⏱ 25 min</span>
-            <span class="recipe-diff easy">Fácil</span>
-          </div>
-          <h3>Sopa Casera de Vegetales</h3>
-          <p>Una sopa reconfortante lista en minutos, ideal para el invierno o como entrada de un menú.</p>
-          <div class="recipe-product">Producto: <strong>Mix para Sopa Peely</strong></div>
-          <button class="btn btn-ghost recipe-toggle" data-target="recipe-sopa">Ver receta ↓</button>
-          <div class="recipe-steps" id="recipe-sopa">
-            <ol>
-              <li>Llevar 1 litro de caldo de verduras a hervor.</li>
-              <li>Agregar el Mix para Sopa Peely.</li>
-              <li>Cocinar 15–20 minutos a fuego medio.</li>
-              <li>Condimentar con sal, pimienta y perejil fresco.</li>
-              <li>Servir caliente.</li>
-            </ol>
-          </div>
-        </div>
-
-        <div class="recipe-card reveal" style="transition-delay: 0.1s">
-          <div class="recipe-icon">🥦</div>
-          <div class="recipe-meta">
-            <span>⏱ 30 min</span>
-            <span class="recipe-diff easy">Fácil</span>
-          </div>
-          <h3>Brócoli Gratinado</h3>
-          <p>Un clásico irresistible: brócoli tierno cubierto de queso derretido y gratinado al horno.</p>
-          <div class="recipe-product">Producto: <strong>Brócoli Peely</strong></div>
-          <button class="btn btn-ghost recipe-toggle" data-target="recipe-brocoli">Ver receta ↓</button>
-          <div class="recipe-steps" id="recipe-brocoli">
-            <ol>
-              <li>Precalentar el horno a 200 °C.</li>
-              <li>Descongelar levemente el Brócoli Peely.</li>
-              <li>Disponer en fuente para horno, cubrir con crema y queso rallado.</li>
-              <li>Salpimentar y agregar nuez moscada al gusto.</li>
-              <li>Hornear 20 minutos hasta gratinar.</li>
-            </ol>
-          </div>
-        </div>
-
-        <div class="recipe-card reveal" style="transition-delay: 0.2s">
-          <div class="recipe-icon">🫑</div>
-          <div class="recipe-meta">
-            <span>⏱ 20 min</span>
-            <span class="recipe-diff easy">Fácil</span>
-          </div>
-          <h3>Tortilla de Espinaca y Pimientos</h3>
-          <p>Una tortilla colorida y nutritiva. Perfecta para cualquier comida del día, con muy poco esfuerzo.</p>
-          <div class="recipe-product">Producto: <strong>Espinaca + Mix Pimientos Peely</strong></div>
-          <button class="btn btn-ghost recipe-toggle" data-target="recipe-tortilla">Ver receta ↓</button>
-          <div class="recipe-steps" id="recipe-tortilla">
-            <ol>
-              <li>Saltear Espinaca y Mix Pimientos Peely en sartén con aceite, 5 min.</li>
-              <li>Batir 4 huevos con sal y pimienta.</li>
-              <li>Verter los huevos sobre los vegetales salteados.</li>
-              <li>Cocinar a fuego medio-bajo, 4–5 min por cada lado.</li>
-              <li>Servir caliente o a temperatura ambiente.</li>
-            </ol>
-          </div>
-        </div>
-
       </div>
+
+      <!-- Otras recetas (renderizado dinámico por JS) -->
+      <div class="recipes-grid"></div>
     </div>
   </section>
 
@@ -598,6 +537,5 @@
   </a>
 
   <script src="js/main.js"></script>
-  <script async src="https://www.tiktok.com/embed.js"></script>
 </body>
 </html>
