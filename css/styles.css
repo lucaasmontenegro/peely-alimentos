@@ -1013,6 +1013,111 @@ section[id] { scroll-margin-top: 80px; }
 /* ============================================
    WHATSAPP FLOTANTE
    ============================================ */
+/* ============================================
+   MODAL CONFIRMACIÓN
+   ============================================ */
+.confirm-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.confirm-modal.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.confirm-modal-box {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(16px);
+  transition: transform 0.2s ease;
+}
+.confirm-modal.open .confirm-modal-box {
+  transform: translateY(0);
+}
+.confirm-modal-title {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+.confirm-section {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.confirm-section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+.confirm-row {
+  display: flex;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+.confirm-row:last-child { margin-bottom: 0; }
+.confirm-row span:first-child { flex-shrink: 0; }
+.confirm-products-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.confirm-products-list li {
+  font-size: 0.88rem;
+  color: var(--dark);
+  display: flex;
+  justify-content: space-between;
+}
+.confirm-products-list li span {
+  color: var(--gray);
+  font-size: 0.83rem;
+}
+.confirm-total {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 12px 16px;
+  background: var(--primary-faint);
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.confirm-express {
+  font-size: 0.84rem;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+}
+.confirm-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: flex-end;
+}
+
 .wa-float {
   position: fixed;
   bottom: 28px;

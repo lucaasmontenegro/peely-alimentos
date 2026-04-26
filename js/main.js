@@ -343,6 +343,66 @@ const revealObs = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
+// ---- Confirmation modal ----
+let pendingFormAction = null;
+
+function showConfirmModal(title, bodyHTML, onConfirm) {
+  document.getElementById('confirm-modal-title').textContent = title;
+  document.getElementById('confirm-modal-body').innerHTML = bodyHTML;
+  pendingFormAction = onConfirm;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function closeConfirmModal() {
+  document.getElementById('confirm-modal').classList.remove('open');
+  pendingFormAction = null;
+}
+
+document.getElementById('confirm-modal-cancel').addEventListener('click', closeConfirmModal);
+document.getElementById('confirm-modal-ok').addEventListener('click', () => {
+  const action = pendingFormAction;
+  closeConfirmModal();
+  if (action) action();
+});
+document.getElementById('confirm-modal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeConfirmModal();
+});
+
+function buildOrderSummaryHTML(data) {
+  const nombre = `${data.get('nombre')} ${data.get('apellido')}`;
+  let dir = `${data.get('calle')} ${data.get('numero')}`;
+  if (data.get('piso'))  dir += `, Piso ${data.get('piso')}`;
+  if (data.get('depto')) dir += `, Depto ${data.get('depto')}`;
+  dir += `, ${data.get('ciudad')}`;
+
+  const selected   = PRODUCTS.filter(p => orderQty[p.id] > 0);
+  const totalPacks = selected.reduce((sum, p) => sum + orderQty[p.id], 0);
+  const totalKg    = (totalPacks * 0.5).toLocaleString('es-AR', { maximumFractionDigits: 1 });
+
+  const productLines = selected.map(p =>
+    `<li>${p.emoji} ${p.name}<span>${orderQty[p.id]} pack${orderQty[p.id] > 1 ? 's' : ''} · ${(orderQty[p.id] * 0.5)} kg</span></li>`
+  ).join('');
+
+  return `
+    <div class="confirm-section">
+      <div class="confirm-section-label">Tus datos</div>
+      <div class="confirm-row"><span>👤</span><span>${nombre}</span></div>
+      <div class="confirm-row"><span>📧</span><span>${data.get('email')}</span></div>
+      <div class="confirm-row"><span>📱</span><span>${data.get('telefono')}</span></div>
+      <div class="confirm-row"><span>📍</span><span>${dir}</span></div>
+    </div>
+    <div class="confirm-section">
+      <div class="confirm-section-label">Productos</div>
+      <ul class="confirm-products-list">${productLines}</ul>
+    </div>
+    <div class="confirm-total">
+      <span>Total del pedido</span>
+      <span>${totalPacks} pack${totalPacks !== 1 ? 's' : ''} · ${totalKg} kg</span>
+    </div>
+    ${data.get('entrega_express') ? '<div class="confirm-express">⚡ Entrega express solicitada</div>' : ''}
+  `;
+}
+
 // ---- Form submission ----
 const form       = document.getElementById('order-form');
 const submitBtn  = document.getElementById('submit-btn');
@@ -357,35 +417,34 @@ form.addEventListener('submit', async e => {
     return;
   }
 
-  submitBtn.textContent = 'Enviando…';
-  submitBtn.disabled = true;
-
   const data = new FormData(form);
   PRODUCTS.forEach(p => {
     if (orderQty[p.id] > 0) data.set(`producto_${p.id}`, `${orderQty[p.id]} pack(s) × 500g`);
   });
 
-  try {
-    // CONFIGURACIÓN: reemplazá "YOUR_FORM_ID" con el ID de tu formulario en Formspree.
-    // Registrate gratis en https://formspree.io → New Form → copiá el ID.
-    const res = await fetch('https://formspree.io/f/xbdqeogy', {
-      method: 'POST',
-      body: data,
-      headers: { Accept: 'application/json' },
-    });
+  showConfirmModal('Confirmá tu pedido', buildOrderSummaryHTML(data), async () => {
+    submitBtn.textContent = 'Enviando…';
+    submitBtn.disabled = true;
 
-    if (res.ok) {
-      form.querySelector('.form-submit').style.display = 'none';
-      successMsg.classList.add('visible');
-    } else {
-      throw new Error('server_error');
+    try {
+      const res = await fetch('https://formspree.io/f/xbdqeogy', {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        form.querySelector('.form-submit').style.display = 'none';
+        successMsg.classList.add('visible');
+      } else {
+        throw new Error('server_error');
+      }
+    } catch {
+      openMailtoFallback(data);
+      submitBtn.textContent = 'Enviar Pedido →';
+      submitBtn.disabled = false;
     }
-  } catch {
-    // Fallback: abrir cliente de email con los datos pre-completados
-    openMailtoFallback(data);
-    submitBtn.textContent = 'Enviar Pedido →';
-    submitBtn.disabled = false;
-  }
+  });
 });
 
 function openMailtoFallback(data) {
@@ -495,6 +554,38 @@ function updateSubsSummary() {
   if (minEl) minEl.style.display = totalPacks > 0 && totalPacks < 6 ? 'block' : 'none';
 }
 
+function buildSubsSummaryHTML(nombre, apellido, email, telefono, calle, numero, piso, depto, ciudad, selected) {
+  let dir = `${calle} ${numero}`;
+  if (piso)  dir += `, Piso ${piso}`;
+  if (depto) dir += `, Depto ${depto}`;
+  dir += `, ${ciudad}`;
+
+  const totalPacks = selected.reduce((sum, p) => sum + subsQty[p.id], 0);
+  const totalKg    = (totalPacks * 0.5).toLocaleString('es-AR', { maximumFractionDigits: 1 });
+
+  const productLines = selected.map(p =>
+    `<li>${p.emoji} ${p.name}<span>${subsQty[p.id]} pack${subsQty[p.id] > 1 ? 's' : ''} · ${(subsQty[p.id] * 0.5)} kg</span></li>`
+  ).join('');
+
+  return `
+    <div class="confirm-section">
+      <div class="confirm-section-label">Tus datos</div>
+      <div class="confirm-row"><span>👤</span><span>${nombre} ${apellido}</span></div>
+      <div class="confirm-row"><span>📧</span><span>${email}</span></div>
+      <div class="confirm-row"><span>📱</span><span>${telefono}</span></div>
+      <div class="confirm-row"><span>📍</span><span>${dir}</span></div>
+    </div>
+    <div class="confirm-section">
+      <div class="confirm-section-label">Productos mensuales</div>
+      <ul class="confirm-products-list">${productLines}</ul>
+    </div>
+    <div class="confirm-total">
+      <span>Total por mes</span>
+      <span>${totalPacks} pack${totalPacks !== 1 ? 's' : ''} · ${totalKg} kg</span>
+    </div>
+  `;
+}
+
 // ---- Subs form submission ----
 const subsForm      = document.getElementById('subs-form');
 const subsSubmitBtn = document.getElementById('subs-submit-btn');
@@ -503,14 +594,14 @@ const subsSuccess   = document.getElementById('subs-success');
 subsForm.addEventListener('submit', async e => {
   e.preventDefault();
 
-  const selected = PRODUCTS.filter(p => subsQty[p.id] > 0);
+  const selected   = PRODUCTS.filter(p => subsQty[p.id] > 0);
   const totalPacks = selected.reduce((sum, p) => sum + subsQty[p.id], 0);
   if (totalPacks === 0) {
     alert('Por favor, seleccioná al menos un producto para tu suscripción.');
     return;
   }
   if (totalPacks < 6) {
-    alert(`El mínimo para suscribirse es 6 packs en total. Llevas ${totalPacks}.`);
+    alert(`El mínimo para suscribirse es 6 packs en total. Llevás ${totalPacks}.`);
     return;
   }
 
@@ -520,43 +611,46 @@ subsForm.addEventListener('submit', async e => {
   const telefono = subsForm.querySelector('[name="subs_telefono"]').value.trim();
   const calle    = subsForm.querySelector('[name="subs_calle"]').value.trim();
   const numero   = subsForm.querySelector('[name="subs_numero"]').value.trim();
+  const piso     = subsForm.querySelector('[name="subs_piso"]').value;
+  const depto    = subsForm.querySelector('[name="subs_depto"]').value;
   const ciudad   = subsForm.querySelector('[name="subs_ciudad"]').value.trim();
+  const notas    = subsForm.querySelector('[name="subs_notas"]').value;
+
   if (!nombre || !apellido || !email || !telefono || !calle || !numero || !ciudad) {
     alert('Por favor, completá todos los campos obligatorios.');
     return;
   }
 
-  subsSubmitBtn.textContent = 'Enviando…';
-  subsSubmitBtn.disabled = true;
+  showConfirmModal(
+    'Confirmá tu suscripción',
+    buildSubsSummaryHTML(nombre, apellido, email, telefono, calle, numero, piso, depto, ciudad, selected),
+    async () => {
+      subsSubmitBtn.textContent = 'Enviando…';
+      subsSubmitBtn.disabled = true;
 
-  const data = new FormData(subsForm);
-  selected.forEach(p => data.set(`subs_producto_${p.id}`, `${subsQty[p.id]} pack(s) × 500g`));
+      const data = new FormData(subsForm);
+      selected.forEach(p => data.set(`subs_producto_${p.id}`, `${subsQty[p.id]} pack(s) × 500g`));
 
-  try {
-    const res = await fetch('https://formspree.io/f/xkokarrg', {
-      method: 'POST',
-      body: data,
-      headers: { Accept: 'application/json' },
-    });
-    if (res.ok) {
-      subsForm.querySelector('.subs-submit-btn').style.display = 'none';
-      subsForm.querySelector('.form-note').style.display = 'none';
-      subsSuccess.classList.add('visible');
-    } else {
-      throw new Error('server_error');
+      try {
+        const res = await fetch('https://formspree.io/f/xkokarrg', {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) {
+          subsForm.querySelector('.subs-submit-btn').style.display = 'none';
+          subsForm.querySelector('.form-note').style.display = 'none';
+          subsSuccess.classList.add('visible');
+        } else {
+          throw new Error('server_error');
+        }
+      } catch {
+        openSubsMailtoFallback(nombre, apellido, email, telefono, calle, numero, piso, depto, ciudad, notas, selected);
+        subsSubmitBtn.textContent = 'Suscribirme →';
+        subsSubmitBtn.disabled = false;
+      }
     }
-  } catch {
-    openSubsMailtoFallback(
-      nombre, apellido, email, telefono,
-      calle, numero,
-      subsForm.querySelector('[name="subs_piso"]').value,
-      subsForm.querySelector('[name="subs_depto"]').value,
-      ciudad,
-      subsForm.querySelector('[name="subs_notas"]').value,
-      selected);
-    subsSubmitBtn.textContent = 'Suscribirme →';
-    subsSubmitBtn.disabled = false;
-  }
+  );
 });
 
 function openSubsMailtoFallback(nombre, apellido, email, telefono, calle, numero, piso, depto, ciudad, notas, selected) {
