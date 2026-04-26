@@ -1576,6 +1576,11 @@ section[id] { scroll-margin-top: 80px; }
   color: var(--dark);
   margin-bottom: 4px;
 }
+.subs-form .form-success h4 {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
 
 .subs-submit-btn {
   width: 100%;
