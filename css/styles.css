@@ -182,11 +182,17 @@ section[id] { scroll-margin-top: 80px; }
 .hero {
   position: relative;
   overflow: hidden;
+  height: calc(100svh - 60px);
+  min-height: 520px;
 }
 
 .hero-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -208,7 +214,7 @@ section[id] { scroll-margin-top: 80px; }
   align-items: center;
   justify-content: center;
   z-index: 1;
-  padding: 68px 24px 0;
+  padding: 68px 24px 70px;
 }
 
 .hero-inner {
