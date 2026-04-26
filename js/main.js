@@ -380,16 +380,16 @@ function buildOrderSummaryHTML(data) {
   const totalKg    = (totalPacks * 0.5).toLocaleString('es-AR', { maximumFractionDigits: 1 });
 
   const productLines = selected.map(p =>
-    `<li>${p.emoji} ${p.name}<span>${orderQty[p.id]} pack${orderQty[p.id] > 1 ? 's' : ''} · ${(orderQty[p.id] * 0.5)} kg</span></li>`
+    `<li>${p.name}<span>${orderQty[p.id]} pack${orderQty[p.id] > 1 ? 's' : ''} · ${(orderQty[p.id] * 0.5)} kg</span></li>`
   ).join('');
 
   return `
     <div class="confirm-section">
       <div class="confirm-section-label">Tus datos</div>
-      <div class="confirm-row"><span>👤</span><span>${nombre}</span></div>
-      <div class="confirm-row"><span>📧</span><span>${data.get('email')}</span></div>
-      <div class="confirm-row"><span>📱</span><span>${data.get('telefono')}</span></div>
-      <div class="confirm-row"><span>📍</span><span>${dir}</span></div>
+      <div class="confirm-row"><span>${nombre}</span></div>
+      <div class="confirm-row"><span>${data.get('email')}</span></div>
+      <div class="confirm-row"><span>${data.get('telefono')}</span></div>
+      <div class="confirm-row"><span>${dir}</span></div>
     </div>
     <div class="confirm-section">
       <div class="confirm-section-label">Productos</div>
@@ -564,16 +564,16 @@ function buildSubsSummaryHTML(nombre, apellido, email, telefono, calle, numero, 
   const totalKg    = (totalPacks * 0.5).toLocaleString('es-AR', { maximumFractionDigits: 1 });
 
   const productLines = selected.map(p =>
-    `<li>${p.emoji} ${p.name}<span>${subsQty[p.id]} pack${subsQty[p.id] > 1 ? 's' : ''} · ${(subsQty[p.id] * 0.5)} kg</span></li>`
+    `<li>${p.name}<span>${subsQty[p.id]} pack${subsQty[p.id] > 1 ? 's' : ''} · ${(subsQty[p.id] * 0.5)} kg</span></li>`
   ).join('');
 
   return `
     <div class="confirm-section">
       <div class="confirm-section-label">Tus datos</div>
-      <div class="confirm-row"><span>👤</span><span>${nombre} ${apellido}</span></div>
-      <div class="confirm-row"><span>📧</span><span>${email}</span></div>
-      <div class="confirm-row"><span>📱</span><span>${telefono}</span></div>
-      <div class="confirm-row"><span>📍</span><span>${dir}</span></div>
+      <div class="confirm-row"><span>${nombre} ${apellido}</span></div>
+      <div class="confirm-row"><span>${email}</span></div>
+      <div class="confirm-row"><span>${telefono}</span></div>
+      <div class="confirm-row"><span>${dir}</span></div>
     </div>
     <div class="confirm-section">
       <div class="confirm-section-label">Productos mensuales</div>
