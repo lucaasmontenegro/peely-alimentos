@@ -368,7 +368,7 @@ form.addEventListener('submit', async e => {
   try {
     // CONFIGURACIÓN: reemplazá "YOUR_FORM_ID" con el ID de tu formulario en Formspree.
     // Registrate gratis en https://formspree.io → New Form → copiá el ID.
-    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    const res = await fetch('https://formspree.io/f/xbdqeogy', {
       method: 'POST',
       body: data,
       headers: { Accept: 'application/json' },
@@ -533,7 +533,7 @@ subsForm.addEventListener('submit', async e => {
   selected.forEach(p => data.set(`subs_producto_${p.id}`, `${subsQty[p.id]} pack(s) × 500g`));
 
   try {
-    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    const res = await fetch('https://formspree.io/f/xbdqeogy', {
       method: 'POST',
       body: data,
       headers: { Accept: 'application/json' },
