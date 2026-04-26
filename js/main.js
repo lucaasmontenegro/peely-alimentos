@@ -533,7 +533,7 @@ subsForm.addEventListener('submit', async e => {
   selected.forEach(p => data.set(`subs_producto_${p.id}`, `${subsQty[p.id]} pack(s) × 500g`));
 
   try {
-    const res = await fetch('https://formspree.io/f/xbdqeogy', {
+    const res = await fetch('https://formspree.io/f/xkokarrg', {
       method: 'POST',
       body: data,
       headers: { Accept: 'application/json' },
