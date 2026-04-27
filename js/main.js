@@ -403,6 +403,25 @@ function buildOrderSummaryHTML(data) {
   `;
 }
 
+// ---- WhatsApp link builder ----
+function buildWaLink(phone, message) {
+  const clean = phone.replace(/\D/g, '');
+  return `https://wa.me/${clean}?text=${encodeURIComponent(message)}`;
+}
+
+function orderWaMessage(data, selected) {
+  const nombre = data.get('nombre');
+  const productos = selected.map(p => `${p.name} x${orderQty[p.id]}`).join(', ');
+  const totalPacks = selected.reduce((s, p) => s + orderQty[p.id], 0);
+  return `Hola ${nombre}, recibimos tu pedido de Peely Alimentos.\n\nProductos: ${productos}\nTotal: ${totalPacks} pack${totalPacks !== 1 ? 's' : ''} · ${totalPacks * 0.5} kg\n\nTe contactamos pronto para coordinar la entrega. ¡Gracias!`;
+}
+
+function subsWaMessage(nombre, selected) {
+  const productos = selected.map(p => `${p.name} x${subsQty[p.id]}`).join(', ');
+  const totalPacks = selected.reduce((s, p) => s + subsQty[p.id], 0);
+  return `Hola ${nombre}, recibimos tu suscripción mensual de Peely Alimentos.\n\nProductos: ${productos}\nTotal mensual: ${totalPacks} pack${totalPacks !== 1 ? 's' : ''} · ${totalPacks * 0.5} kg\n\nTe contactamos para confirmar los detalles. ¡Gracias!`;
+}
+
 // ---- Form submission ----
 const form       = document.getElementById('order-form');
 const submitBtn  = document.getElementById('submit-btn');
@@ -425,6 +444,9 @@ form.addEventListener('submit', async e => {
   showConfirmModal('Confirmá tu pedido', buildOrderSummaryHTML(data), async () => {
     submitBtn.textContent = 'Enviando…';
     submitBtn.disabled = true;
+
+    const selected = PRODUCTS.filter(p => orderQty[p.id] > 0);
+    data.set('whatsapp_link', buildWaLink(data.get('telefono'), orderWaMessage(data, selected)));
 
     try {
       const res = await fetch('https://formspree.io/f/xbdqeogy', {
@@ -630,6 +652,7 @@ subsForm.addEventListener('submit', async e => {
 
       const data = new FormData(subsForm);
       selected.forEach(p => data.set(`subs_producto_${p.id}`, `${subsQty[p.id]} pack(s) × 500g`));
+      data.set('whatsapp_link', buildWaLink(telefono, subsWaMessage(nombre, selected)));
 
       try {
         const res = await fetch('https://formspree.io/f/xkokarrg', {
